@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-const firebaseConfig = {
+const firebaseConfig: { [key: string]: string } = {
   apiKey: "AIzaSyAuXQ2serHi7ngUe-MOqIfYWzj9ADAuxVM",
   authDomain: "calmeet-604ea.firebaseapp.com",
   projectId: "calmeet-604ea",
