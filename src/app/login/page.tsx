@@ -9,18 +9,18 @@ export default function LoginPage() {
   const { user } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const checkAuth = () => {
-      if (user) {
-        console.log("This is the logged in user", user);
-        router.push("/main/dashboard");
-      } else {
-        console.log("no user found");
-      }
-    };
+  // useEffect(() => {
+  //   const checkAuth = () => {
+  //     if (user) {
+  //       console.log("This is the logged in user", user);
+  //       router.push("/main/dashboard");
+  //     } else {
+  //       console.log("no user found");
+  //     }
+  //   };
 
-    checkAuth();
-  }, []);
+  //   checkAuth();
+  // }, []);
 
   if (!user) {
     return (

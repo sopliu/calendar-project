@@ -9,9 +9,12 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 
 import { auth } from "@/lib/firebase/config";
+import { FirebaseError } from "firebase/app";
 
 export async function signIn(
   email: string,
@@ -29,6 +32,31 @@ export async function signOut() {
   return firebaseSignOut(auth);
 }
 
+export const signUpWithEmail = async (
+  email: string,
+  password: string,
+  fullName: string,
+  errorFn?: (msg: string) => void
+) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    await updateProfile(user, {
+      displayName: fullName,
+    });
+  } catch (error: unknown) {
+    if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
+      errorFn(error.message);
+    } else {
+      console.error("An unknown error occurred.");
+    }
+  }
+};
+
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
 
@@ -40,5 +68,5 @@ export function useAuth() {
     return () => unsubscribe();
   }, []);
 
-  return { user };
+  return { auth, user };
 }

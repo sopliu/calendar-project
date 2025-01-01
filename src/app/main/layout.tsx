@@ -1,7 +1,7 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "@/lib/firebase/auth";
 
 export default function DashboardLayout({
@@ -14,6 +14,7 @@ export default function DashboardLayout({
 
   useEffect(() => {
     const checkAuth = () => {
+      console.log(user);
       if (user) {
         console.log("This is the logged in user", user);
       } else {
