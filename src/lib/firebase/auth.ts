@@ -29,7 +29,7 @@ export async function signIn(
 }
 
 export async function signOut() {
-  return firebaseSignOut(auth);
+  await firebaseSignOut(auth);
 }
 
 export const signUpWithEmail = async (
