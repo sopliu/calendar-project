@@ -14,18 +14,20 @@ export default function DashboardLayout({
 
   useEffect(() => {
     const checkAuth = () => {
-      console.log(user);
       if (user) {
         console.log("This is the logged in user", user);
-      } else {
+      } else if (user === null) {
         console.log("no user found");
         router.push("/login");
+      } else {
+        console.log("auth loading...");
       }
     };
 
     checkAuth();
-  }, []);
+  }, [user]);
 
+  if (user === false) return <>Auth loading...</>;
   if (user) {
     return (
       <div>

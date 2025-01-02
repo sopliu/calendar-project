@@ -14,14 +14,17 @@ export default function SignUpPage() {
       if (user) {
         console.log("This is the logged in user", user);
         router.push("/main/dashboard");
-      } else {
+      } else if (user === null) {
         console.log("no user found");
+      } else {
+        console.log("auth loading...");
       }
     };
 
     checkAuth();
-  }, []);
+  }, [user]);
 
+  if (user === false) return <>Auth loading...</>;
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
