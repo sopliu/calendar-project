@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { useAlert } from "@/app/components/contexts/alert-provider";
+import { useAlert } from "@/components/contexts/alert-provider";
 import { signUpFieldsType } from "./types";
 import { SignUpCard, SignUpContainer } from "./styles";
-import FormField from "@/app/components/form-field";
+import FormField from "@/components/form-field";
 import { signUpWithEmail } from "@/lib/firebase/auth";
 
 const emptySignUpFields = {
