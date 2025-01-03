@@ -19,13 +19,23 @@ import { FirebaseError } from "firebase/app";
 export async function signIn(
   email: string,
   password: string,
-  rememberMe: boolean = false
+  isPersistent: boolean = false,
+  errorFn?: (msg: string) => void
 ) {
-  await setPersistence(
-    auth,
-    rememberMe ? browserLocalPersistence : browserSessionPersistence
-  );
-  return signInWithEmailAndPassword(auth, email, password);
+  try {
+    setPersistence(
+      auth,
+      isPersistent ? browserLocalPersistence : browserSessionPersistence
+    );
+
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error: unknown) {
+    if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
+      errorFn(error.message);
+    } else {
+      console.error("An unknown error occurred.");
+    }
+  }
 }
 
 export async function signOut() {
