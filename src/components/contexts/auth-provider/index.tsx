@@ -39,10 +39,6 @@ export const AuthProvider = ({
     return <Typography>Loading...</Typography>;
   }
 
-  // if (loading) {
-  //   return null;
-  // }
-
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
