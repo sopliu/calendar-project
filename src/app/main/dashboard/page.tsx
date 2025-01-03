@@ -6,10 +6,16 @@ import { signOut } from "@/lib/firebase/auth";
 
 const Dashboard = () => {
   const user = useAuth();
+
+  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    await signOut();
+  };
+
   return (
     <>
       <Typography>{user ? "logged in" : "not logged in"}</Typography>
-      <Button onClick={(e) => signOut}>Logout</Button>
+      <Button onClick={handleLogout}>Logout</Button>
     </>
   );
 };
