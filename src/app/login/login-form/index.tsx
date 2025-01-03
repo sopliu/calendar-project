@@ -62,7 +62,7 @@ export default function LoginForm() {
     event.preventDefault();
     if (!validateInputs()) return;
     signIn(values.email, values.password, values.isPersistent, (msg: string) =>
-      showAlert("warning", msg)
+      showAlert("error", msg)
     );
   };
 

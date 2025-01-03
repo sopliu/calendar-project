@@ -15,6 +15,7 @@ import {
 
 import { auth } from "@/lib/firebase/config";
 import { FirebaseError } from "firebase/app";
+import { getFirebaseErrorMsg } from "@/utils/helpers";
 
 export async function signIn(
   email: string,
@@ -31,7 +32,7 @@ export async function signIn(
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(error.message);
+      errorFn(getFirebaseErrorMsg(error.message));
     } else {
       console.error("An unknown error occurred.");
     }
@@ -60,7 +61,7 @@ export const signUpWithEmail = async (
     });
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(error.message);
+      errorFn(getFirebaseErrorMsg(error.message));
     } else {
       console.error("An unknown error occurred.");
     }
