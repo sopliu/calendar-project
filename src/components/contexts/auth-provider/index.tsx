@@ -16,8 +16,10 @@ export const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("The user found is ", user);
       if (user && isPublic) router.push("/main/dashboard");
@@ -29,14 +31,17 @@ export const AuthProvider = ({
     return () => unsubscribe();
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
   // TODO: Fix the loading state (flicker) and avoid hydration issues
-  if ((user && isPublic) || (!user && !isPublic)) {
+  if (loading || (user && isPublic) || (!user && !isPublic)) {
     return <Typography>Loading...</Typography>;
   }
 
-  if (loading) {
-    return null;
-  }
+  // if (loading) {
+  //   return null;
+  // }
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
