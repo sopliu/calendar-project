@@ -76,7 +76,6 @@ export const signInWithGoogle = async (
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (!credential) throw Error;
-
       signInWithCredential(auth, credential);
     })
     .catch((error: Error) => {
