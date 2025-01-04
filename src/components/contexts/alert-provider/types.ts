@@ -5,3 +5,11 @@ export interface AlertPropsType {
   severity: AlertSeverityType;
   message: string;
 }
+
+export interface AlertContextType {
+  showAlert: (
+    severity: AlertPropsType["severity"],
+    message: string,
+    action?: React.ReactNode
+  ) => void;
+}

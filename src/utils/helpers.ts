@@ -5,7 +5,7 @@
  * @returns {string} The string with the first letter of each word capitalized.
  */
 export const capitaliseSentence = (str: string) => {
-  let splitStr = str.toLowerCase().split(" ");
+  const splitStr = str.toLowerCase().split(" ");
   for (let i = 0; i < splitStr.length; i++) {
     splitStr[i] =
       splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);

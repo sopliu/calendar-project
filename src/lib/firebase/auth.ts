@@ -11,6 +11,9 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithCredential,
 } from "firebase/auth";
 
 import { auth } from "@/lib/firebase/config";
@@ -81,3 +84,22 @@ export function useAuth() {
 
   return { auth, user };
 }
+
+export const signInWithGoogle = async (
+  provider: GoogleAuthProvider,
+  errorHandler?: (msg?: string) => void
+) => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (!credential) throw Error;
+
+      signInWithCredential(auth, credential);
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorHandler) errorHandler();
+    });
+};

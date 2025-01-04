@@ -2,22 +2,12 @@
 
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
-import { AlertPropsType, AlertSeverityType } from "./types";
+import { AlertContextType, AlertPropsType, AlertSeverityType } from "./types";
 
-// Define the context value type
-interface AlertContextType {
-  showAlert: (
-    severity: AlertPropsType["severity"],
-    message: string,
-    action?: React.ReactNode
-  ) => void;
-}
-
+const AlertContext = createContext<AlertContextType | undefined>(undefined);
 interface AlertProviderProps {
   children: ReactNode;
 }
-
-const AlertContext = createContext<AlertContextType | undefined>(undefined);
 
 const alertDefaults: AlertPropsType = {
   open: false,
@@ -39,8 +29,13 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children }) => {
   return (
     <AlertContext.Provider value={{ showAlert }}>
       {children}
-      <Snackbar open={alert.open} autoHideDuration={5000} onClose={closeAlert}>
-        <Alert severity={alert.severity} onClose={closeAlert}>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={closeAlert}
+      >
+        <Alert severity={alert.severity} variant="filled" onClose={closeAlert}>
           {alert.message}
         </Alert>
       </Snackbar>
