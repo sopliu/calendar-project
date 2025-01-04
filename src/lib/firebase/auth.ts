@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
-  User,
   signOut as firebaseSignOut,
   browserLocalPersistence,
   browserSessionPersistence,
   setPersistence,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithPopup,
@@ -71,20 +68,6 @@ export const signUpWithEmail = async (
   }
 };
 
-export function useAuth() {
-  const [user, setUser] = useState<User | null | false>(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  return { auth, user };
-}
-
 export const signInWithGoogle = async (
   provider: GoogleAuthProvider,
   errorHandler?: (msg?: string) => void
@@ -96,10 +79,7 @@ export const signInWithGoogle = async (
 
       signInWithCredential(auth, credential);
     })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      if (errorHandler) errorHandler();
+    .catch((error: Error) => {
+      if (errorHandler) errorHandler(error.message);
     });
 };
