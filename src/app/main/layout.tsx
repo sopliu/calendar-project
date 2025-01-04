@@ -12,22 +12,12 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <AuthProvider>
       <Box width="100vw" height="100vh" overflow="hidden" display="flex">
         <CssBaseline />
-        <ActionBar open={open} handleDrawerOpen={handleDrawerOpen} />
-        <SideNavbar open={open} handleDrawerClose={handleDrawerClose} />
+        <ActionBar />
+        <SideNavbar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <>{children}</>

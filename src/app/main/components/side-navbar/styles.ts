@@ -2,7 +2,8 @@
 
 import { CSSObject, styled, Theme } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import { drawerWidth } from "../action-bar/styles";
+
+const drawerWidth = 240;
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

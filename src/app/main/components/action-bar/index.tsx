@@ -14,6 +14,8 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
+  Divider,
+  AppBar,
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ArrowDropIcon from "@mui/icons-material/ArrowDropDownRounded";
@@ -22,12 +24,10 @@ import EventIcon from "@mui/icons-material/EventRounded";
 import EventAvailablIcon from "@mui/icons-material/EventAvailableRounded";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentIndRounded";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccountsRounded";
-import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/LogoutRounded";
 import LogoTitle from "./logo-title";
 import { useAuth } from "@/components/contexts/auth-provider";
 import { signOut } from "@/lib/firebase/auth";
-import { AppBar } from "./styles";
 
 const actions: { label: string; icon: ReactNode }[] = [
   { label: "New Group", icon: <GroupAddIcon fontSize="small" /> },
@@ -54,15 +54,7 @@ const settings: { label: string; action: () => void; icon: ReactNode }[] = [
   },
 ];
 
-interface ActionBarProps {
-  open?: boolean;
-  handleDrawerOpen?: () => void;
-}
-
-const ActionBar: React.FC<ActionBarProps> = ({
-  open = false,
-  handleDrawerOpen = () => {},
-}) => {
+const ActionBar: React.FC = ({}) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -84,23 +76,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
   };
 
   return (
-    <AppBar position="fixed" open={open}>
+    <AppBar position="fixed" sx={{ zIndex: "3", boxShadow: "none" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={[
-              {
-                marginRight: 5,
-              },
-              open && { display: "none" },
-            ]}
-          >
-            <MenuIcon />
-          </IconButton>
           <LogoTitle />
           <Box sx={{ margin: "0 10px", display: "flex" }}>
             <Button
@@ -139,21 +117,23 @@ const ActionBar: React.FC<ActionBarProps> = ({
               }}
             >
               {actions.map((action) => (
-                <MenuItem
-                  key={action.label}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    minHeight: 0,
-                    padding: { xs: "5px 20px" },
-                  }}
-                >
-                  <ListItemIcon sx={{ marginTop: "-3px" }}>
-                    {action.icon}
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography fontSize="15px">{action.label}</Typography>
-                  </ListItemText>
-                </MenuItem>
+                <Box key={action.label}>
+                  <MenuItem
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      minHeight: 0,
+                      padding: { xs: "5px 20px" },
+                    }}
+                  >
+                    <ListItemIcon sx={{ marginTop: "-3px" }}>
+                      {action.icon}
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography fontSize="15px">{action.label}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                  {action.label === "New Event" && <Divider />}
+                </Box>
               ))}
             </Menu>
           </Box>
