@@ -10,6 +10,10 @@ const Dashboard = () => {
   return (
     <>
       <Typography>{user ? "logged in" : "not logged in"}</Typography>
+      <Typography>{user ? "logged in" : "not logged in"}</Typography>
+      <Typography>{user ? "logged in" : "not logged in"}</Typography>
+      <Typography>{user ? "logged in" : "not logged in"}</Typography>
+      <Typography>{user ? "logged in" : "not logged in"}</Typography>
     </>
   );
 };

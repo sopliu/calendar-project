@@ -2,7 +2,6 @@
 
 import React, { useState, MouseEvent, ReactNode } from "react";
 import {
-  AppBar,
   Box,
   Toolbar,
   IconButton,
@@ -23,10 +22,12 @@ import EventIcon from "@mui/icons-material/EventRounded";
 import EventAvailablIcon from "@mui/icons-material/EventAvailableRounded";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentIndRounded";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccountsRounded";
+import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/LogoutRounded";
 import LogoTitle from "./logo-title";
 import { useAuth } from "@/components/contexts/auth-provider";
 import { signOut } from "@/lib/firebase/auth";
+import { AppBar } from "./styles";
 
 const actions: { label: string; icon: ReactNode }[] = [
   { label: "New Group", icon: <GroupAddIcon fontSize="small" /> },
@@ -53,7 +54,15 @@ const settings: { label: string; action: () => void; icon: ReactNode }[] = [
   },
 ];
 
-const ActionBar: React.FC = () => {
+interface ActionBarProps {
+  open?: boolean;
+  handleDrawerOpen?: () => void;
+}
+
+const ActionBar: React.FC<ActionBarProps> = ({
+  open = false,
+  handleDrawerOpen = () => {},
+}) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -75,9 +84,23 @@ const ActionBar: React.FC = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" open={open}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={[
+              {
+                marginRight: 5,
+              },
+              open && { display: "none" },
+            ]}
+          >
+            <MenuIcon />
+          </IconButton>
           <LogoTitle />
           <Box sx={{ margin: "0 10px", display: "flex" }}>
             <Button
