@@ -85,6 +85,7 @@ export function useAuth() {
   return { auth, user };
 }
 
+// TODO: Update MongoDB user record with same email
 export const signInWithGoogle = async (
   provider: GoogleAuthProvider,
   errorHandler?: (msg?: string) => void
