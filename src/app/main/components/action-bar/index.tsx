@@ -79,7 +79,7 @@ const ActionBar: React.FC = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <LogoTitle />
-          <Box sx={{ margin: "0 10px", display: { xs: "flex" } }}>
+          <Box sx={{ margin: "0 10px", display: "flex" }}>
             <Button
               variant="outlined"
               aria-label="account of current user"
@@ -119,7 +119,10 @@ const ActionBar: React.FC = () => {
                 <MenuItem
                   key={action.label}
                   onClick={handleCloseNavMenu}
-                  sx={{ padding: "5px 20px" }}
+                  sx={{
+                    minHeight: 0,
+                    padding: { xs: "5px 20px" },
+                  }}
                 >
                   <ListItemIcon sx={{ marginTop: "-3px" }}>
                     {action.icon}
