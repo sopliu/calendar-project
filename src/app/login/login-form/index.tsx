@@ -8,10 +8,12 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { SignInContainer, SignInCard } from "./styles";
-import { signIn } from "@/lib/firebase/auth";
+import { signIn, signInWithGoogle } from "@/lib/firebase/auth";
 import FormField from "@/components/form-field";
 import { useAlert } from "@/components/contexts/alert-provider";
 import { signInFieldsType } from "./types";
+import { GoogleAuthProvider } from "firebase/auth";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const emptySignInFields = {
   email: "",
@@ -54,15 +56,19 @@ export default function LoginForm() {
     }
 
     setErrorMessages(copyError);
-
     return isValid;
+  };
+
+  const handleGoogleSDK = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithGoogle(provider);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateInputs()) return;
     signIn(values.email, values.password, values.isPersistent, (msg: string) =>
-      showAlert("warning", msg)
+      showAlert("error", msg)
     );
   };
 
@@ -108,6 +114,10 @@ export default function LoginForm() {
             value={values.password}
             changeHandler={(e) => handleFormChange(e, "password")}
           />
+          <Button onClick={handleGoogleSDK} variant="outlined">
+            <GoogleIcon sx={{ margin: "5px 10px" }} />
+            Sign in With Google
+          </Button>
           <FormControlLabel
             control={<Checkbox value="isPersistent" color="primary" />}
             label="Remember me"
@@ -121,7 +131,7 @@ export default function LoginForm() {
             Sign in
           </Button>
           <Typography sx={{ textAlign: "center" }}>
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?{"  "}
             <Link href="/sign-up" variant="body2" sx={{ alignSelf: "center" }}>
               Sign up
             </Link>

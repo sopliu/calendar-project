@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
-  User,
   signOut as firebaseSignOut,
   browserLocalPersistence,
   browserSessionPersistence,
   setPersistence,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithCredential,
 } from "firebase/auth";
 
 import { auth } from "@/lib/firebase/config";
 import { FirebaseError } from "firebase/app";
+import { getFirebaseErrorMsg } from "@/utils/helpers";
 
 export async function signIn(
   email: string,
@@ -31,7 +32,7 @@ export async function signIn(
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(error.message);
+      errorFn(getFirebaseErrorMsg(error.message));
     } else {
       console.error("An unknown error occurred.");
     }
@@ -60,23 +61,24 @@ export const signUpWithEmail = async (
     });
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(error.message);
+      errorFn(getFirebaseErrorMsg(error.message));
     } else {
       console.error("An unknown error occurred.");
     }
   }
 };
 
-export function useAuth() {
-  const [user, setUser] = useState<User | null | false>(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+export const signInWithGoogle = async (
+  provider: GoogleAuthProvider,
+  errorHandler?: (msg?: string) => void
+) => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (!credential) throw Error;
+      signInWithCredential(auth, credential);
+    })
+    .catch((error: Error) => {
+      if (errorHandler) errorHandler(error.message);
     });
-
-    return () => unsubscribe();
-  }, []);
-
-  return { auth, user };
-}
+};

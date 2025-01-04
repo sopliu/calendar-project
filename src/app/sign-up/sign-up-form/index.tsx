@@ -81,7 +81,7 @@ export default function SignUpForm() {
       values.email,
       values.password,
       values.fullName,
-      (msg: string) => showAlert("warning", msg)
+      (msg: string) => showAlert("error", msg)
     );
   };
 

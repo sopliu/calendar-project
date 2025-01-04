@@ -16,8 +16,10 @@ export const AuthProvider = ({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("The user found is ", user);
       if (user && isPublic) router.push("/main/dashboard");
@@ -27,15 +29,15 @@ export const AuthProvider = ({
       setLoading(false);
     });
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO: Fix the loading state (flicker) and avoid hydration issues
-  if ((user && isPublic) || (!user && !isPublic)) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  if (loading) {
+  if (!mounted) {
     return null;
+  }
+  // TODO: Fix the loading state (flicker) and avoid hydration issues
+  if (loading || (user && isPublic) || (!user && !isPublic)) {
+    return <Typography>Loading...</Typography>;
   }
 
   return (
