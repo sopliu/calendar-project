@@ -5,12 +5,11 @@ import {
   Button,
   CardContent,
   Stack,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React from "react";
-import { DashboardCard, DashboardSection } from "./styles";
+import { CardTitle, DashboardCard, DashboardSection } from "./styles";
 
 const Dashboard = () => {
   // const user = useAuth();
@@ -20,18 +19,16 @@ const Dashboard = () => {
   return (
     <Box
       display="flex"
-      gap={3}
+      gap={{ sx: 2, md: 3 }}
       flex={1}
       sx={{
         flexDirection: `${isSm && "column"}`,
       }}
     >
-      <Stack flex={1} gap={3}>
+      <Stack flex={1} gap={{ sx: 2, md: 3 }}>
         <DashboardSection>
           <Box display="flex" justifyContent="space-between" marginBottom="5px">
-            <Typography fontSize={isSm ? "18px" : "20px"}>
-              Week's Availability
-            </Typography>
+            <CardTitle>Week&apos;s Availability</CardTitle>
             <Button sx={{ minWidth: 0, minHeight: 0, padding: "2px 10px" }}>
               Adjust
             </Button>
@@ -41,18 +38,14 @@ const Dashboard = () => {
           </DashboardCard>
         </DashboardSection>
         <DashboardSection sx={{ flex: 2 }}>
-          <Typography fontSize={isSm ? "18px" : "20px"} marginBottom="5px">
-            Upcoming Events
-          </Typography>
+          <CardTitle>Upcoming Events</CardTitle>
           <DashboardCard>
             <CardContent></CardContent>
           </DashboardCard>
         </DashboardSection>
       </Stack>
       <DashboardSection>
-        <Typography fontSize={isSm ? "18px" : "20px"} marginBottom="5px">
-          Notifications
-        </Typography>
+        <CardTitle>Notifications</CardTitle>
         <DashboardCard>
           <CardContent></CardContent>
         </DashboardCard>
