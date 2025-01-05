@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSObject, styled, Theme } from "@mui/material";
+import { CSSObject, ListItemButton, styled, Theme } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 
 const drawerWidth = 240;
@@ -35,6 +35,16 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
+export const NavListItemButton = styled(ListItemButton)({
+  minHeight: 48,
+  px: 2.5,
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex",
+  flexDirection: "column",
+  position: "relative",
+});
+
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme }) => ({
@@ -43,13 +53,6 @@ export const Drawer = styled(MuiDrawer, {
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-      },
-    },
     {
       props: ({ open }) => !open,
       style: {
