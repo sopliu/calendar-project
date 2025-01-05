@@ -18,7 +18,7 @@ import {
 } from "./styles";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Typography } from "@mui/material";
+import { Badge, Typography } from "@mui/material";
 import { MainPages, NavItemsType } from "./types";
 
 const navItems: NavItemsType[] = [
@@ -32,8 +32,17 @@ const navItems: NavItemsType[] = [
   {
     name: "chat",
     label: "Chat",
-    inactiveIcon: <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "28px" }} />,
-    activeIcon: <ChatBubbleOutlinedIcon sx={{ fontSize: "28px" }} />,
+    // TODO: chat notifications
+    inactiveIcon: (
+      <Badge color="secondary" badgeContent={1}>
+        <ChatBubbleOutlineOutlinedIcon sx={{ fontSize: "28px" }} />
+      </Badge>
+    ),
+    activeIcon: (
+      <Badge color="secondary" badgeContent={1}>
+        <ChatBubbleOutlinedIcon sx={{ fontSize: "28px" }} />
+      </Badge>
+    ),
     action: (router: AppRouterInstance) => router.push("/main/chat"),
   },
   {
