@@ -4,17 +4,21 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ChatBubbleOutlinedIcon from "@mui/icons-material/ChatBubbleOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
-import { Drawer, NavListItemButton } from "./styles";
+import {
+  ActiveNavBarIndicator,
+  Drawer,
+  NavIcon,
+  NavListItemButton,
+} from "./styles";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { MainPages, NavItemsType } from "./types";
 
 const navItems: NavItemsType[] = [
@@ -51,41 +55,25 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ activePage }) => {
     <Drawer variant="permanent" sx={{ zIndex: 0 }}>
       <Divider sx={{ margin: "30px 0" }} />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.label} sx={{ minWidth: 0, padding: "5px 0" }}>
-            <NavListItemButton onClick={() => item.action(router)}>
-              <ListItemIcon
-                sx={[
-                  {
-                    minWidth: 0,
-                    justifyContent: "center",
-                    marginTop: 1,
-                  },
-                  activePage === item.name && { color: "primary.main" },
-                ]}
-              >
-                {activePage === item.name ? item.activeIcon : item.inactiveIcon}
-              </ListItemIcon>
-              <Typography
-                fontSize="9px"
-                sx={[activePage === item.name && { color: "primary.main" }]}
-              >
-                {item.label}
-              </Typography>
-              <Box
-                sx={{
-                  position: "absolute",
-                  height: `${activePage === item.name ? "80%" : 0}`,
-                  width: "5%",
-                  bgcolor: "primary.main",
-                  left: 3,
-                  borderRadius: "30px",
-                  transition: "height 0.3s ease-out",
-                }}
-              />
-            </NavListItemButton>
-          </ListItem>
-        ))}
+        {navItems.map((item) => {
+          const isActive = activePage === item.name;
+          return (
+            <ListItem key={item.label} sx={{ minWidth: 0, padding: "5px 0" }}>
+              <NavListItemButton onClick={() => item.action(router)}>
+                <NavIcon isActive={isActive}>
+                  {isActive ? item.activeIcon : item.inactiveIcon}
+                </NavIcon>
+                <Typography
+                  fontSize="9px"
+                  sx={[isActive && { color: "primary.main" }]}
+                >
+                  {item.label}
+                </Typography>
+                <ActiveNavBarIndicator isActive={isActive} />
+              </NavListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );

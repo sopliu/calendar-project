@@ -1,6 +1,13 @@
 "use client";
 
-import { CSSObject, ListItemButton, styled, Theme } from "@mui/material";
+import {
+  Box,
+  CSSObject,
+  ListItemButton,
+  ListItemIcon,
+  styled,
+  Theme,
+} from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 
 const drawerWidth = 240;
@@ -62,3 +69,30 @@ export const Drawer = styled(MuiDrawer, {
     },
   ],
 }));
+
+interface ActiveNavIndicatorProps {
+  isActive?: boolean;
+}
+export const ActiveNavBarIndicator = styled(Box)<ActiveNavIndicatorProps>(
+  ({ isActive = true, theme }) => ({
+    position: "absolute",
+    height: `${isActive ? "80%" : 0}`,
+    width: "5%",
+    backgroundColor: theme.palette.primary.main,
+    left: 3,
+    borderRadius: "30px",
+    transition: "height 0.3s ease-out",
+  })
+);
+
+export const NavIcon = styled(ListItemIcon)<ActiveNavIndicatorProps>(
+  ({ isActive = true, theme }) => ({
+    minWidth: 0,
+    justifyContent: "center",
+    marginTop: 1,
+    transition: "color 0.3s ease-out",
+    color: `${
+      isActive ? theme.palette.primary.main : theme.palette.text.secondary
+    }`,
+  })
+);
