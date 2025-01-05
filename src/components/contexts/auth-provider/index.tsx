@@ -22,7 +22,7 @@ export const AuthProvider = ({
     setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("The user found is ", user);
-      if (user && isPublic) router.push("/main/dashboard");
+      if (user && isPublic) router.push("/dashboard");
       else if (!user && !isPublic) router.push("/login");
 
       setUser(user);
