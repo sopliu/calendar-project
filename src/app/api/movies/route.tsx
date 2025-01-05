@@ -1,7 +1,8 @@
 import client from "@/lib/mongodb/config";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
     const db = client.db("sample_mflix");
     const movies = await db
@@ -12,8 +13,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .toArray();
     res.json(movies);
   } catch (e) {
-    console.error(e);
+    console.error("Error fetching documents:", e);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-};
-
-export default handler;
+}
