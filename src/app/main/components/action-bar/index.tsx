@@ -78,9 +78,12 @@ const ActionBar: React.FC = ({}) => {
   return (
     <AppBar position="fixed" sx={{ zIndex: "3", boxShadow: "none" }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
           <LogoTitle />
-          <Box sx={{ margin: "0 10px", display: "flex" }}>
+          <Box display="flex" alignItems="center" gap={2}>
             <Button
               variant="outlined"
               aria-label="account of current user"
@@ -136,49 +139,49 @@ const ActionBar: React.FC = ({}) => {
                 </Box>
               ))}
             </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={user?.displayName ?? ""}
-                  src="/static/images/avatar/2.jpg"
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting.label}
-                  onClick={() => {
-                    handleCloseUserMenu();
-                    setting.action();
-                  }}
-                >
-                  <ListItemIcon sx={{ marginTop: "-3px" }}>
-                    {setting.icon}
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography fontSize="15px">{setting.label}</Typography>
-                  </ListItemText>
-                </MenuItem>
-              ))}
-            </Menu>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt={user?.displayName ?? ""}
+                    src="/static/images/avatar/2.jpg"
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting.label}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      setting.action();
+                    }}
+                  >
+                    <ListItemIcon sx={{ marginTop: "-3px" }}>
+                      {setting.icon}
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography fontSize="15px">{setting.label}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           </Box>
         </Toolbar>
       </Container>

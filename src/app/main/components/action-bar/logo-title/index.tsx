@@ -2,7 +2,7 @@
 
 import React from "react";
 import EventNoteIcon from "@mui/icons-material/EventNote";
-import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const LogoTitle: React.FC = () => {
@@ -12,7 +12,7 @@ const LogoTitle: React.FC = () => {
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
-    <>
+    <Box display="flex" alignItems="center">
       <EventNoteIcon sx={{ mr: 1 }} />
       <Typography
         variant={isMd ? "h5" : isXs ? "h6" : "h4"}
@@ -22,7 +22,6 @@ const LogoTitle: React.FC = () => {
         sx={{
           mr: 2,
           display: "flex",
-          flexGrow: 1,
           fontFamily: "monospace",
           fontWeight: 700,
           letterSpacing: ".3rem",
@@ -33,7 +32,7 @@ const LogoTitle: React.FC = () => {
       >
         CALMEET
       </Typography>
-    </>
+    </Box>
   );
 };
 

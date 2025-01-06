@@ -11,6 +11,7 @@ export const DashboardCard = styled(Card)(({ theme }) => ({
   boxShadow: "none",
   border: `1px solid ${theme.palette.primary.light}`,
   backgroundColor: `${theme.palette.primary.light}10`,
+  margin: "5px 0",
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
