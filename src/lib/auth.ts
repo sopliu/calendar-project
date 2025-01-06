@@ -7,7 +7,6 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  updateProfile,
   signInWithPopup,
   GoogleAuthProvider,
   signInWithCredential,
@@ -56,9 +55,16 @@ export const signUpWithEmail = async (
       password
     );
     const user = userCredential.user;
-    await updateProfile(user, {
-      displayName: fullName,
+    // Storing display name in MongoDB instead
+    // await updateProfile(user, {
+    //   displayName: fullName,
+    // });
+
+    const response = await fetch("/api/auth/sign-up", {
+      method: "POST",
+      body: JSON.stringify({ email: email, uid: user.uid, fullName: fullName }),
     });
+    console.log(response);
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
       errorFn(getFirebaseErrorMsg(error.message));

@@ -8,7 +8,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { SignInContainer, SignInCard } from "./styles";
-import { signIn, signInWithGoogle } from "@/lib/firebase/auth";
+import { signIn, signInWithGoogle } from "@/lib/auth";
 import FormField from "@/components/form-field";
 import { useAlert } from "@/components/contexts/alert-provider";
 import { signInFieldsType } from "./types";

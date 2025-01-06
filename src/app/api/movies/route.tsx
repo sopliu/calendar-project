@@ -1,8 +1,7 @@
 import client from "@/lib/mongodb/config";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const db = client.db("sample_mflix");
     const movies = await db
@@ -11,7 +10,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       .sort({ metacritic: -1 })
       .limit(10)
       .toArray();
-    res.json(movies);
+    return NextResponse.json(movies);
   } catch (e) {
     console.error("Error fetching documents:", e);
     return NextResponse.json(

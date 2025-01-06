@@ -9,7 +9,7 @@ import { useAlert } from "@/components/contexts/alert-provider";
 import { signUpFieldsType } from "./types";
 import { SignUpCard, SignUpContainer } from "./styles";
 import FormField from "@/components/form-field";
-import { signUpWithEmail } from "@/lib/firebase/auth";
+import { signUpWithEmail } from "@/lib/auth";
 
 const emptySignUpFields = {
   email: "",
