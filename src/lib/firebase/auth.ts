@@ -32,7 +32,11 @@ export async function signIn(
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error: unknown) {
     if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(getFirebaseErrorMsg(error.message));
+      errorFn(
+        error instanceof FirebaseError
+          ? getFirebaseErrorMsg(error.code)
+          : error.message
+      );
     } else {
       console.error("An unknown error occurred.");
     }
@@ -47,7 +51,7 @@ export const signUpWithEmail = async (
   email: string,
   password: string,
   fullName: string,
-  errorFn?: (msg: string) => void
+  errorHandler?: (msg: string) => void
 ) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -60,8 +64,11 @@ export const signUpWithEmail = async (
       displayName: fullName,
     });
   } catch (error: unknown) {
-    if (errorFn && (error instanceof FirebaseError || error instanceof Error)) {
-      errorFn(getFirebaseErrorMsg(error.message));
+    if (
+      errorHandler &&
+      (error instanceof FirebaseError || error instanceof Error)
+    ) {
+      errorHandler(getFirebaseErrorMsg(error.message));
     } else {
       console.error("An unknown error occurred.");
     }
@@ -72,13 +79,20 @@ export const signInWithGoogle = async (
   provider: GoogleAuthProvider,
   errorHandler?: (msg?: string) => void
 ) => {
-  signInWithPopup(auth, provider)
+  await signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (!credential) throw Error;
-      signInWithCredential(auth, credential);
+      return signInWithCredential(auth, credential);
     })
-    .catch((error: Error) => {
-      if (errorHandler) errorHandler(error.message);
+    .catch((error: unknown) => {
+      if (
+        errorHandler &&
+        (error instanceof FirebaseError || error instanceof Error)
+      ) {
+        errorHandler(getFirebaseErrorMsg(error.message));
+      } else {
+        console.error("An unknown error occurred.");
+      }
     });
 };

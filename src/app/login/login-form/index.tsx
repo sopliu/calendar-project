@@ -14,6 +14,7 @@ import { useAlert } from "@/components/contexts/alert-provider";
 import { signInFieldsType } from "./types";
 import { GoogleAuthProvider } from "firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
+import { CircularProgress } from "@mui/material";
 
 const emptySignInFields = {
   email: "",
@@ -29,6 +30,7 @@ export default function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<signInFieldsType>({
     ...emptySignInFields,
   });
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -64,12 +66,17 @@ export default function LoginForm() {
     signInWithGoogle(provider);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateInputs()) return;
-    signIn(values.email, values.password, values.isPersistent, (msg: string) =>
-      showAlert("error", msg)
+    setIsSigningIn(true);
+    await signIn(
+      values.email,
+      values.password,
+      values.isPersistent,
+      (msg: string) => showAlert("error", msg)
     );
+    setIsSigningIn(false);
   };
 
   return (
@@ -122,14 +129,20 @@ export default function LoginForm() {
             control={<Checkbox value="isPersistent" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            onClick={validateInputs}
-          >
-            Sign in
-          </Button>
+          <Box display="flex" justifyContent="center" height="40px">
+            {isSigningIn ? (
+              <CircularProgress />
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                onClick={validateInputs}
+              >
+                Sign in
+              </Button>
+            )}
+          </Box>
           <Typography sx={{ textAlign: "center" }}>
             Don&apos;t have an account?{"  "}
             <Link href="/sign-up" variant="body2" sx={{ alignSelf: "center" }}>
