@@ -27,9 +27,12 @@ const Dashboard = () => {
     >
       <Stack flex={1} gap={{ sx: 2, md: 3 }}>
         <DashboardSection>
-          <Box display="flex" justifyContent="space-between" marginBottom="5px">
+          <Box display="flex" justifyContent="space-between">
             <CardTitle>Week&apos;s Availability</CardTitle>
-            <Button sx={{ minWidth: 0, minHeight: 0, padding: "2px 10px" }}>
+            <Button
+              variant="outlined"
+              sx={{ minWidth: 0, minHeight: 0, padding: "0px 10px" }}
+            >
               Adjust
             </Button>
           </Box>
