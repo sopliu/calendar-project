@@ -19,13 +19,13 @@ const Dashboard = () => {
   return (
     <Box
       display="flex"
-      gap={{ sx: 2, md: 3 }}
+      gap={{ xs: 2, md: 3 }}
       flex={1}
       sx={{
         flexDirection: `${isSm && "column"}`,
       }}
     >
-      <Stack flex={1} gap={{ sx: 2, md: 3 }}>
+      <Stack flex={1} gap={{ xs: 1, md: 2 }}>
         <DashboardSection>
           <Box display="flex" justifyContent="space-between">
             <CardTitle>Week&apos;s Availability</CardTitle>
