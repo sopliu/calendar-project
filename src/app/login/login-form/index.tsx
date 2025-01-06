@@ -143,11 +143,9 @@ export default function LoginForm() {
               </Button>
             )}
           </Box>
-          <Typography sx={{ textAlign: "center" }}>
+          <Typography variant="body2" textAlign="center">
             Don&apos;t have an account?{"  "}
-            <Link href="/sign-up" variant="body2" sx={{ alignSelf: "center" }}>
-              Sign up
-            </Link>
+            <Link href="/sign-up">Sign up</Link>
           </Typography>
         </Box>
       </SignInCard>
