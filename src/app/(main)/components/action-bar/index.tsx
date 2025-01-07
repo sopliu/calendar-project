@@ -27,7 +27,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccountsRounded";
 import LogoutIcon from "@mui/icons-material/LogoutRounded";
 import LogoTitle from "./logo-title";
 import { useAuth } from "@/components/contexts/auth-provider";
-import { signOut } from "@/lib/firebase/auth";
+import { signOut } from "@/lib/auth";
 
 const actions: { label: string; icon: ReactNode }[] = [
   { label: "New Group", icon: <GroupAddIcon fontSize="small" /> },
