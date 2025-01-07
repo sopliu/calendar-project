@@ -21,6 +21,7 @@ export const capitaliseSentence = (str: string) => {
  */
 // TODO: Remomve last bracket from unencoded error message
 export const getFirebaseErrorMsg = (errorMsg: string) => {
+  console.log(errorMsg);
   const match = errorMsg.match(/auth\/([^\s]+)/);
   return match ? capitaliseSentence(match[1].replace("-", " ")) : errorMsg;
 };

@@ -1,11 +1,12 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "@/lib/firebase/config";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AuthProviderProps } from "./types";
+import { auth } from "@/lib/firebase/config";
+import React from "react";
 
 const AuthContext = createContext<{ user: User | null }>({ user: null });
 
@@ -17,7 +18,6 @@ export const AuthProvider = ({
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     setMounted(true);
     const unsubscribe = onAuthStateChanged(auth, (user) => {

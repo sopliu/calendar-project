@@ -152,14 +152,10 @@ export default function SignUpForm() {
             Sign up
           </Button>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <Typography sx={{ textAlign: "center" }}>
-            Already have an account?{" "}
-            <Link href="/login" variant="body2" sx={{ alignSelf: "center" }}>
-              Sign in
-            </Link>
-          </Typography>
-        </Box>
+        <Typography variant="body2" textAlign="center">
+          Already have an account?{"  "}
+          <Link href="/login">Sign in</Link>
+        </Typography>
       </SignUpCard>
     </SignUpContainer>
   );
